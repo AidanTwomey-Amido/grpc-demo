@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+option csharp_namespace = "AirQuality.gRPC";
+
+import "google/protobuf/timestamp.proto";
+
+package WorldTime;
+
+service AirQuality {
+    rpc GetReport (stream Sample) returns (AirQualityReport);
+}
+
+
+message Sample {
+    int32 state_code = 1;
+    int32 county_code= 2;
+    int32 site_number= 3;
+    int32 parameter_code= 4;
+    int32 poc= 5;
+    double latitude= 6;
+    double longitude= 7;
+    string datum= 8;
+    string parameter= 9;
+    string sample_duration= 10;
+    google.protobuf.Timestamp date_local= 11;
+    string units_of_measure= 12;
+    string event_type= 13;
+    int32 observation_count= 14;
+    double observation_percent= 15;
+    string validity_indicator= 16;
+    double arithmetic_mean= 17;
+    double first_max_value= 18;
+    int32 first_max_hour= 19;
+    int32 method_code= 20;
+    string method= 21;
+    string local_site_name= 22;
+    string site_address= 23;
+    string state= 24;
+    string county= 25;
+    string city= 26;
+    int32 cbsa_code= 27;
+    string cbsa= 28;
+    google.protobuf.Timestamp date_of_last_change= 29;
+}
+
+message AirQualityReport {
+    double High = 1;
+    double Low = 2;
+    double Change = 3;
+    Point Location = 4;
+    repeated SampleValue Values = 5;
+}
+
+message SampleValue
+{
+    google.protobuf.Timestamp SampleDate = 1;
+    double Value = 2;
+}
+
+message Point {
+    double latitude = 1;
+    double longitude = 2;
+}
